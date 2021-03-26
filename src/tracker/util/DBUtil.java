@@ -1,4 +1,4 @@
-package tracker.database;
+package tracker.util;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -9,6 +9,7 @@ import java.time.LocalDate;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import tracker.controller.DBController;
 import tracker.model.ToDo;
 import tracker.model.User;
 

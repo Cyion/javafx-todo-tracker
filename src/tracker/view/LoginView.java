@@ -8,7 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import tracker.controller.StageBuilderUtil;
+import tracker.util.StageBuilderUtil;
 import tracker.model.Login;
 
 public class LoginView extends BorderPane {

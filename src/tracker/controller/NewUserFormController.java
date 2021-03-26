@@ -1,7 +1,7 @@
 package tracker.controller;
 
 import javafx.stage.Stage;
-import tracker.database.DBUtil;
+import tracker.util.DBUtil;
 import tracker.model.User;
 import tracker.view.NewUserForm;
 

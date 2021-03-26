@@ -12,7 +12,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import tracker.database.DBUtil;
+import tracker.util.DBUtil;
 import tracker.model.Login;
 
 public class ToDoForm extends BorderPane {

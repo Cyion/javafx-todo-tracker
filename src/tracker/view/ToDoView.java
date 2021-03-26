@@ -13,13 +13,13 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import tracker.database.DBUtil;
+import tracker.util.DBUtil;
 import tracker.model.ToDo;
 
 public class ToDoView extends VBox {
 	private ToDo toDo;
 	private final Button updateButton = new Button("Speichern");
-	private final Button deleteButton = new Button("Löschen");
+	private final Button deleteButton = new Button("Lï¿½schen");
 	private final TextField titleField = new TextField();
 	private final TextArea descriptionField = new TextArea();
 	private final Label startLabel = new Label();

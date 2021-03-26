@@ -1,6 +1,6 @@
 package tracker.model;
 
-import tracker.database.DBUtil;
+import tracker.util.DBUtil;
 
 public class Login {
 	private static Login instance = new Login();

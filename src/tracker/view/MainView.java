@@ -9,8 +9,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import tracker.controller.StageBuilderUtil;
-import tracker.database.DBUtil;
+import tracker.util.StageBuilderUtil;
+import tracker.util.DBUtil;
 import tracker.model.Login;
 import tracker.model.ToDo;
 

@@ -1,4 +1,4 @@
-package tracker.database;
+package tracker.controller;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
