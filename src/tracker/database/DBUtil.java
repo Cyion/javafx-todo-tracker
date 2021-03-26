@@ -183,6 +183,22 @@ public class DBUtil {
 			DBController.getInstance().closeConnenction();
 		}
 	}
+
+	public static void insertUser(User user, String password) {
+		try {
+			PreparedStatement ps = DBController.getInstance().openConnection().prepareStatement(INSERT_USER);
+			ps.setString(1, user.getEmail());
+			ps.setString(2, password);
+			ps.setString(3, user.getFirstname());
+			ps.setString(4, user.getLastname());
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBController.getInstance().closeConnenction();
+		}
+	}
 	
 	public static User getUser(String email, String password) {
 		try {

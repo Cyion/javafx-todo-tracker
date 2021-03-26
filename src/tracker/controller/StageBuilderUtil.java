@@ -5,7 +5,7 @@ import javafx.stage.Stage;
 import tracker.view.LoginView;
 import tracker.view.MainView;
 import tracker.view.ToDoForm;
-import tracker.view.UserForm;
+import tracker.view.NewUserForm;
 
 public class StageBuilderUtil {
 	
@@ -26,7 +26,9 @@ public class StageBuilderUtil {
 	}
 	
 	public static Scene getUserFormScene() {
-		return new Scene (new UserForm(), 500, 250);
+		final NewUserForm view = new NewUserForm();
+		final NewUserFormController controller = new NewUserFormController(view);
+		return new Scene (view, 500, 250);
 	}
 	
 	public static Scene getToDoFormScene() {
