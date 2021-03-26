@@ -9,10 +9,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
-import tracker.database.DBUtil;
-
-import javax.xml.soap.Text;
 
 public class NewUserForm extends BorderPane {
 	private final TextField emailField = new TextField();
