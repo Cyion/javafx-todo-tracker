@@ -1,19 +1,19 @@
 package tracker.controller;
 
-import javafx.stage.Stage;
 import tracker.util.DBUtil;
 import tracker.model.User;
-import tracker.view.NewUserForm;
+import tracker.util.StageBuilderUtil;
+import tracker.view.NewUserView;
 
-public class NewUserFormController {
-    private final NewUserForm view;
+public class NewUserViewController {
+    private final NewUserView view;
 
-    public NewUserFormController(NewUserForm view) {
+    public NewUserViewController(NewUserView view) {
         this.view = view;
         initialize();
     }
 
-    public NewUserForm getView() {
+    public NewUserView getView() {
         return this.view;
     }
 
@@ -29,7 +29,7 @@ public class NewUserFormController {
         if (isInputCorrect()) {
             final User user = new User(this.view.getEmailField().getText(), this.view.getFirstnameField().getText(), this.view.getLastnameField().getText());
             DBUtil.insertUser(user, this.view.getPasswordField().getText());
-            ((Stage) this.view.getScene().getWindow()).close();
+            StageBuilderUtil.closeStage(this.view);
         }
     }
 

@@ -1,17 +1,22 @@
 package tracker.util;
 
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import tracker.controller.NewUserFormController;
+import javafx.stage.Window;
+import tracker.controller.LoginViewController;
+import tracker.controller.NewUserViewController;
 import tracker.view.LoginView;
 import tracker.view.MainView;
 import tracker.view.ToDoForm;
-import tracker.view.NewUserForm;
+import tracker.view.NewUserView;
 
 public class StageBuilderUtil {
 
 	public static Scene getLoginScene() {
-		return new Scene(new LoginView(), 500, 250);
+		final LoginView view = new LoginView();
+		final LoginViewController controller = new LoginViewController(view);
+		return new Scene(view, 500, 250);
 	}
 
 	public static Scene getMainScene() {
@@ -19,8 +24,8 @@ public class StageBuilderUtil {
 	}
 
 	public static Scene getUserFormScene() {
-		final NewUserForm view = new NewUserForm();
-		final NewUserFormController controller = new NewUserFormController(view);
+		final NewUserView view = new NewUserView();
+		final NewUserViewController controller = new NewUserViewController(view);
 		return new Scene (view, 500, 250);
 	}
 
@@ -42,6 +47,13 @@ public class StageBuilderUtil {
 
 	public static Stage getToDoFormStage() {
 		return createStage(getToDoFormScene(), "Neues ToDo");
+	}
+
+	public static void closeStage(Node node) {
+		final Window window = node.getScene().getWindow();
+		if (window instanceof Stage) {
+			((Stage) window).close();
+		}
 	}
 
 	private static Stage createStage(Scene scene, String title) {

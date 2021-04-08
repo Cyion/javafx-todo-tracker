@@ -10,14 +10,14 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 
-public class NewUserForm extends BorderPane {
+public class NewUserView extends BorderPane {
 	private final TextField emailField = new TextField();
 	private final PasswordField passwordField = new PasswordField();
 	private final TextField firstnameField = new TextField();
 	private final TextField lastnameField = new TextField();
 	private final Button createButton = new Button("Erstellen");
 	
-	public NewUserForm() {
+	public NewUserView() {
 		createView();
 	}
 
