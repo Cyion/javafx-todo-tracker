@@ -1,10 +1,6 @@
 package tracker.util;
 
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.time.LocalDate;
 
 import javafx.collections.FXCollections;
@@ -12,6 +8,8 @@ import javafx.collections.ObservableList;
 import tracker.controller.DBController;
 import tracker.model.ToDo;
 import tracker.model.User;
+
+import javax.xml.crypto.Data;
 
 public class DBUtil {
 
@@ -29,7 +27,7 @@ public class DBUtil {
 	private static final String SELECT_ALL_UNFINISHED_TODOS = "SELECT * FROM todos WHERE finished = FALSE AND user = ?";
 	private static final String SELECT_ALL_FINISHED_TODOS = "SELECT * FROM todos WHERE finished = TRUE AND user = ?";
 	private static final String DELETE_FROM_TODOS = "DELETE FROM todos WHERE id = ?";
-	private static final String UPDATE_TODO = "UPDATE todos SET title = ?, description = ? WHERE id = ?";
+	private static final String UPDATE_TODO = "UPDATE todos SET title = ?, description = ?, endDate = ?, finished = ? WHERE id = ?";
 	private static final String UPDATE_TODO_SET_FINISHED = "UPDATE todos SET endDate = ?, finished = TRUE WHERE id = ?";
 	private static final String SELECT_USER = "SELECT email, firstname, lastname FROM user WHERE email LIKE ? AND password LIKE ?";
 	private static final String INSERT_USER = "INSERT INTO user (email, password, firstname, lastname) VALUES (?, ?, ?, ?)";
@@ -92,8 +90,7 @@ public class DBUtil {
 			while (rs.next()) {
 				ToDo todo = new ToDo(rs.getLong("id"), rs.getString("title"), rs.getString("description"),
 						rs.getDate("startDate").toLocalDate(),
-						rs.getDate("endDate") != null ? rs.getDate("endDate").toLocalDate() : null,
-						rs.getBoolean("finished"), user);
+						rs.getDate("endDate") != null ? rs.getDate("endDate").toLocalDate() : null, user);
 				data.add(todo);
 			}
 			ps.close();
@@ -114,8 +111,7 @@ public class DBUtil {
 			while (rs.next()) {
 				ToDo todo = new ToDo(rs.getLong("id"), rs.getString("title"), rs.getString("description"),
 						rs.getDate("startDate").toLocalDate(),
-						rs.getDate("endDate") != null ? rs.getDate("endDate").toLocalDate() : null,
-						rs.getBoolean("finished"), user);
+						rs.getDate("endDate") != null ? rs.getDate("endDate").toLocalDate() : null, user);
 				data.add(todo);
 			}
 			ps.close();
@@ -127,10 +123,10 @@ public class DBUtil {
 		return data;
 	}
 
-	public static void deleteTodo(long id) {
+	public static void deleteTodo(ToDo todo) {
 		try {
 			PreparedStatement ps = DBController.getInstance().openConnection().prepareStatement(DELETE_FROM_TODOS);
-			ps.setLong(1, id);
+			ps.setLong(1, todo.getId());
 			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e) {
@@ -139,43 +135,19 @@ public class DBUtil {
 			DBController.getInstance().closeConnenction();
 		}
 	}
-	
-	public static void updateTodo(long id, String title, String description) {
+
+	public static void updateTodo(ToDo todo) {
 		try {
 			PreparedStatement ps = DBController.getInstance().openConnection().prepareStatement(UPDATE_TODO);
-			ps.setString(1, title);
-			ps.setString(2, description);
-			ps.setLong(3, id);
-			ps.executeUpdate();
-			ps.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			DBController.getInstance().closeConnenction();
-		}
-	}
-	
-	public static void updateTodoSetFinished(long id, LocalDate finishedDate) {
-		try {
-			PreparedStatement ps = DBController.getInstance().openConnection().prepareStatement(UPDATE_TODO_SET_FINISHED);
-			ps.setDate(1, Date.valueOf(finishedDate));
-			ps.setLong(2, id);
-			ps.executeUpdate();
-			ps.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			DBController.getInstance().closeConnenction();
-		}
-	}
-	
-	public static void insertUser(String email, String password, String firstname, String lastname) {
-		try {
-			PreparedStatement ps = DBController.getInstance().openConnection().prepareStatement(INSERT_USER);
-			ps.setString(1, email);
-			ps.setString(2, password);
-			ps.setString(3, firstname);
-			ps.setString(4, lastname);
+			ps.setString(1, todo.getTitle());
+			ps.setString(2, todo.getDescription());
+			if (todo.isFinished()) {
+				ps.setDate(3, Date.valueOf(todo.getFinishedDate()));
+			} else {
+				ps.setNull(3, Types.DATE);
+			}
+			ps.setBoolean(4, todo.isFinished());
+			ps.setLong(5, todo.getId());
 			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e) {

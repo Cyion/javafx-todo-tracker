@@ -3,18 +3,20 @@ package tracker.model;
 import java.time.LocalDate;
 
 public class ToDo {
-	private long id;
+	private final long id;
 	private String title;
 	private String description;
-	private LocalDate startDate;
+	private final LocalDate startDate;
 	private LocalDate finishedDate;
 	private boolean finished;
-	private User user;
+	private final User user;
 	
-	public ToDo(long id, String title, String description, LocalDate startDate, LocalDate finishedDate, boolean finished, User user) {
+	public ToDo(long id, String title, String description, LocalDate startDate, LocalDate finishedDate, User user) {
 		this(id, title, description, startDate, user);
-		this.finishedDate = finishedDate;
-		this.finished = finished;	
+		if (finishedDate != null) {
+			this.finishedDate = finishedDate;
+			this.finished = true;
+		}
 	}
 	
 	public ToDo(long id, String title, String description, LocalDate startDate, User user) {
@@ -51,6 +53,25 @@ public class ToDo {
 	
 	public User getUser() {
 		return this.user;
+	}
+
+	public void setTitle(String title) {
+		if (title != null && !title.isEmpty()) {
+			this.title = title;
+		}
+	}
+
+	public void setDescription(String description) {
+		if (description != null) {
+			this.description = description;
+		}
+	}
+
+	public void setFinished() {
+		if (!this.finished) {
+			this.finished = true;
+			this.finishedDate = LocalDate.now();
+		}
 	}
 
 	@Override

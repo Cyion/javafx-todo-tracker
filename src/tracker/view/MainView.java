@@ -9,6 +9,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import tracker.controller.ToDoViewController;
 import tracker.util.StageBuilderUtil;
 import tracker.util.DBUtil;
 import tracker.model.Login;
@@ -68,11 +69,16 @@ public class MainView extends BorderPane {
 		listView.setPrefHeight(350);
 		listView.focusedProperty().addListener((observable, oldFocus, newFocus) -> {
 			if (newFocus) {
-				setRight(new ToDoView(listView.getSelectionModel().getSelectedItem()));
+				ToDo todo = listView.getSelectionModel().getSelectedItem();
+				ToDoView view = new ToDoView(todo);
+				ToDoViewController controller = new ToDoViewController(view, todo);
+				setRight(view);
 			}
 		});
 		listView.getSelectionModel().selectedItemProperty().addListener((observable, oldTodo, newTodo) -> {
-			setRight(new ToDoView(newTodo));
+			ToDoView view = new ToDoView(newTodo);
+			ToDoViewController controller = new ToDoViewController(view, newTodo);
+			setRight(view);
 		});
 		return listView;
 	}
