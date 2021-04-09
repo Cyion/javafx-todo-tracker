@@ -5,10 +5,11 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import tracker.controller.LoginViewController;
+import tracker.controller.NewToDoViewController;
 import tracker.controller.NewUserViewController;
 import tracker.view.LoginView;
 import tracker.view.MainView;
-import tracker.view.ToDoForm;
+import tracker.view.NewToDoView;
 import tracker.view.NewUserView;
 
 public class StageBuilderUtil {
@@ -30,7 +31,9 @@ public class StageBuilderUtil {
 	}
 
 	public static Scene getToDoFormScene() {
-		return new Scene (new ToDoForm(), 600, 600);
+		final NewToDoView view = new NewToDoView();
+		final NewToDoViewController controller = new NewToDoViewController(view);
+		return new Scene (view, 600, 600);
 	}
 
 	public static Stage getLoginStage() {
