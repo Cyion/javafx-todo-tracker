@@ -1,7 +1,5 @@
 package tracker.view;
 
-import java.time.LocalDate;
-
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -13,40 +11,57 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import tracker.database.DBUtil;
 import tracker.model.ToDo;
 
 public class ToDoView extends VBox {
 	private ToDo toDo;
 	private final Button updateButton = new Button("Speichern");
-	private final Button deleteButton = new Button("Löschen");
+	private final Button deleteButton = new Button("LÃ¶schen");
 	private final TextField titleField = new TextField();
 	private final TextArea descriptionField = new TextArea();
 	private final Label startLabel = new Label();
 	private final Label endLabel = new Label();
-	private final CheckBox finished = new CheckBox();
+	private final CheckBox finishedBox = new CheckBox();
 
 	public ToDoView(ToDo toDo) {
 		this.toDo = toDo;
-		if (this.toDo != null) {
-			this.titleField.setText(this.toDo.getTitle());
-			this.descriptionField.setText(this.toDo.getDescription());
-			this.startLabel.setText(this.toDo.getStartDate().toString());
-			if (this.toDo.isFinished()) {
-				this.deleteButton.setDisable(true);
-				this.updateButton.setDisable(true);
-				this.titleField.setEditable(false);
-				this.descriptionField.setEditable(false);
-				this.endLabel.setText(this.toDo.getFinishedDate().toString());
-			}
-		}
 		createView();
 	}
 
+	public Button getUpdateButton() {
+		return this.updateButton;
+	}
+
+	public Button getDeleteButton() {
+		return  this.deleteButton;
+	}
+
+	public TextField getTitleField() {
+		return this.titleField;
+	}
+
+	public TextArea getDescriptionField() {
+		return this.descriptionField;
+	}
+
+	public Label getStartLabel() {
+		return this.startLabel;
+	}
+
+	public Label getEndLabel() {
+		return this.endLabel;
+	}
+
+	public CheckBox getFinishedBox() {
+		return this.finishedBox;
+	}
+
 	private void createView() {
+		initViewComponents();
+
 		setPadding(new Insets(20));
 		setSpacing(350);
-		GridPane todoGrid = new GridPane();
+		final GridPane todoGrid = new GridPane();
 		todoGrid.getColumnConstraints().add(new ColumnConstraints(125));
 		todoGrid.getColumnConstraints().add(new ColumnConstraints(400));
 		todoGrid.add(new Label("Titel:"), 0, 0);
@@ -59,30 +74,37 @@ public class ToDoView extends VBox {
 		if (this.toDo != null && this.toDo.isFinished()) {
 			todoGrid.add(this.endLabel, 1, 6);
 		} else {
-			todoGrid.add(this.finished, 1, 6);
+			todoGrid.add(this.finishedBox, 1, 6);
 		}
 		todoGrid.setVgap(15);
 		this.updateButton.setPrefWidth(100);
-		this.updateButton.setOnAction(e -> {
-			if (this.toDo != null && !this.titleField.getText().isEmpty()) {
-				DBUtil.updateTodo(this.toDo.getId(), this.titleField.getText(), this.descriptionField.getText());
-				if (this.finished.isSelected()) {
-					DBUtil.updateTodoSetFinished(this.toDo.getId(), LocalDate.now());
-				}
-				((MainView) getParent()).updateList();
-			}
-		});
 		this.deleteButton.setPrefWidth(100);
-		this.deleteButton.setOnAction(e -> {
-			if (this.toDo != null) {
-				DBUtil.deleteTodo(this.toDo.getId());
-				((MainView) getParent()).updateList();
-			}
-		});
 		HBox controlBox = new HBox(this.updateButton, this.deleteButton);
 		controlBox.setSpacing(50);
 		controlBox.setAlignment(Pos.CENTER);
 		getChildren().addAll(todoGrid, controlBox);
 	}
 
+	private void initViewComponents() {
+		if (this.toDo != null) {
+			this.titleField.setText(this.toDo.getTitle());
+			this.descriptionField.setText(this.toDo.getDescription());
+			this.startLabel.setText(this.toDo.getStartDate().toString());
+
+			if (this.toDo.isFinished()) {
+				disableViewComponents();
+				this.endLabel.setText(this.toDo.getFinishedDate().toString());
+			}
+		} else {
+			disableViewComponents();
+		}
+	}
+
+	private void disableViewComponents() {
+		this.deleteButton.setDisable(true);
+		this.updateButton.setDisable(true);
+		this.titleField.setEditable(false);
+		this.descriptionField.setEditable(false);
+		this.finishedBox.setDisable(true);
+	}
 }

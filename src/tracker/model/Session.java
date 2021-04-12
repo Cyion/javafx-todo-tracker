@@ -1,16 +1,16 @@
 package tracker.model;
 
-import tracker.database.DBUtil;
+import tracker.util.DBUtil;
 
-public class Login {
-	private static Login instance = new Login();
+public class Session {
+	private final static Session instance = new Session();
 	private User user;
 	
-	private Login() {
+	private Session() {
 		
 	}
 	
-	public static Login getInstance() {
+	public static Session getInstance() {
 		return instance;
 	}
 	

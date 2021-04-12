@@ -9,22 +9,40 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
-import tracker.database.DBUtil;
 
-public class UserForm extends BorderPane{
+public class NewUserView extends BorderPane {
 	private final TextField emailField = new TextField();
 	private final PasswordField passwordField = new PasswordField();
 	private final TextField firstnameField = new TextField();
 	private final TextField lastnameField = new TextField();
 	private final Button createButton = new Button("Erstellen");
 	
-	public UserForm() {
+	public NewUserView() {
 		createView();
+	}
+
+	public TextField getEmailField() {
+		return this.emailField;
+	}
+
+	public PasswordField getPasswordField() {
+		return this.passwordField;
+	}
+
+	public TextField getFirstnameField() {
+		return this.firstnameField;
+	}
+
+	public TextField getLastnameField() {
+		return this.lastnameField;
+	}
+
+	public Button getCreateButton() {
+		return this.createButton;
 	}
 	
 	private void createView() {
-		GridPane inputForm = new GridPane();
+		final GridPane inputForm = new GridPane();
 		inputForm.add(new Label("Email:"), 0, 0);
 		inputForm.add(this.emailField, 1, 0);
 		inputForm.add(new Label("Passwort:"), 0, 1);
@@ -34,15 +52,11 @@ public class UserForm extends BorderPane{
 		inputForm.add(new Label("Nachname:"), 0, 3);
 		inputForm.add(this.lastnameField, 1, 3);
 		inputForm.getColumnConstraints().add(new ColumnConstraints(125));
+		inputForm.getColumnConstraints().add(new ColumnConstraints(300));
 		inputForm.setVgap(15);
+		inputForm.setAlignment(Pos.TOP_CENTER);
 		
 		this.createButton.setPrefWidth(100);
-		this.createButton.setOnAction(e -> {
-			if (!this.emailField.getText().isEmpty() && !this.passwordField.getText().isEmpty() && !this.firstnameField.getText().isEmpty() && !this.lastnameField.getText().isEmpty()) {
-				DBUtil.insertUser(this.emailField.getText(), this.passwordField.getText(), this.firstnameField.getText(), this.lastnameField.getText());
-				((Stage) getScene().getWindow()).close();
-			}
-		});
 		
 		setCenter(inputForm);
 		setBottom(this.createButton);

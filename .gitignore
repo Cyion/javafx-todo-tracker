@@ -1,8 +1,10 @@
 /.idea/
+/out/
+/.settings/
 *.iml
 *.class
 *.classpath
 *.project
 *.fxbuild
-/.settings/
+*.db
 
