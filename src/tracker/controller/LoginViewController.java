@@ -1,6 +1,6 @@
 package tracker.controller;
 
-import tracker.model.Login;
+import tracker.model.Session;
 import tracker.util.StageBuilderUtil;
 import tracker.view.LoginView;
 
@@ -31,7 +31,7 @@ public class LoginViewController {
         final String password = this.view.getPasswordTextField().getText();
 
         if (!email.isEmpty() && !password.isEmpty()) {
-            if (Login.getInstance().login(email, password)) {
+            if (Session.getInstance().login(email, password)) {
                 StageBuilderUtil.getMainStage().show();
                 StageBuilderUtil.closeStage(this.view);
             }

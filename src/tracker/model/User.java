@@ -1,9 +1,9 @@
 package tracker.model;
 
 public class User {
-	private String email;
-	private String firstname;
-	private String lastname;
+	private final String email;
+	private final String firstname;
+	private final String lastname;
 	
 	public User(String email, String firstname, String lastname) {
 		this.email = email;

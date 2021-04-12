@@ -9,8 +9,6 @@ import tracker.controller.DBController;
 import tracker.model.ToDo;
 import tracker.model.User;
 
-import javax.xml.crypto.Data;
-
 public class DBUtil {
 
 	private static final String CREATE_USER_TABLE = "CREATE TABLE IF NOT EXISTS user ("
