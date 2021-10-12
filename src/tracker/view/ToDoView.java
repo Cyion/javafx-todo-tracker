@@ -13,6 +13,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import tracker.model.ToDo;
 
+import java.util.Objects;
+
 public class ToDoView extends VBox {
 	private ToDo toDo;
 	private final Button updateButton = new Button("Speichern");
@@ -20,7 +22,7 @@ public class ToDoView extends VBox {
 	private final TextField titleField = new TextField();
 	private final TextArea descriptionField = new TextArea();
 	private final Label startLabel = new Label();
-	private final Label endLabel = new Label();
+	private final Label finishedLabel = new Label();
 	private final CheckBox finishedBox = new CheckBox();
 
 	public ToDoView(ToDo toDo) {
@@ -48,8 +50,8 @@ public class ToDoView extends VBox {
 		return this.startLabel;
 	}
 
-	public Label getEndLabel() {
-		return this.endLabel;
+	public Label getFinishedLabel() {
+		return this.finishedLabel;
 	}
 
 	public CheckBox getFinishedBox() {
@@ -72,28 +74,28 @@ public class ToDoView extends VBox {
 		todoGrid.add(this.startLabel, 1, 4);
 		todoGrid.add(new Label("Beendet:"), 0, 6);
 		if (this.toDo != null && this.toDo.isFinished()) {
-			todoGrid.add(this.endLabel, 1, 6);
+			todoGrid.add(this.finishedLabel, 1, 6);
 		} else {
 			todoGrid.add(this.finishedBox, 1, 6);
 		}
 		todoGrid.setVgap(15);
 		this.updateButton.setPrefWidth(100);
 		this.deleteButton.setPrefWidth(100);
-		HBox controlBox = new HBox(this.updateButton, this.deleteButton);
+		final HBox controlBox = new HBox(this.updateButton, this.deleteButton);
 		controlBox.setSpacing(50);
 		controlBox.setAlignment(Pos.CENTER);
 		getChildren().addAll(todoGrid, controlBox);
 	}
 
 	private void initViewComponents() {
-		if (this.toDo != null) {
+		if (Objects.nonNull(this.toDo)) {
 			this.titleField.setText(this.toDo.getTitle());
 			this.descriptionField.setText(this.toDo.getDescription());
 			this.startLabel.setText(this.toDo.getStartDate().toString());
 
 			if (this.toDo.isFinished()) {
 				disableViewComponents();
-				this.endLabel.setText(this.toDo.getFinishedDate().toString());
+				this.finishedLabel.setText(this.toDo.getFinishedDate().toString());
 			}
 		} else {
 			disableViewComponents();

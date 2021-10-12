@@ -1,7 +1,8 @@
 package tracker.controller;
 
 import tracker.model.Session;
-import tracker.util.DBUtil;
+import tracker.database.DBUtil;
+import tracker.model.ToDo;
 import tracker.util.StageBuilderUtil;
 import tracker.view.NewToDoView;
 
@@ -31,7 +32,9 @@ public class NewToDoViewController {
         final String title = this.view.getTitleField().getText();
         final String description = this.view.getDescriptionField().getText();
         if (!title.isEmpty()) {
-            DBUtil.insertToDo(title, description, LocalDate.now(), Session.getInstance().getUser());
+            final ToDo.Builder builder = new ToDo.Builder(-1, title, LocalDate.now(), Session.getInstance().getUser())
+                    .setDescription(description);
+            DBUtil.insertToDo(builder.build());
             StageBuilderUtil.closeStage(this.view);
         }
     }

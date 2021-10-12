@@ -2,7 +2,7 @@ package tracker.application;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import tracker.util.DBUtil;
+import tracker.database.DBUtil;
 import tracker.util.StageBuilderUtil;
 
 public class Main extends Application {

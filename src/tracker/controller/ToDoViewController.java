@@ -1,8 +1,10 @@
 package tracker.controller;
 
 import tracker.model.ToDo;
-import tracker.util.DBUtil;
+import tracker.database.DBUtil;
 import tracker.view.ToDoView;
+
+import java.time.LocalDate;
 
 public class ToDoViewController {
     private final ToDoView view;
@@ -38,7 +40,7 @@ public class ToDoViewController {
             this.todo.setTitle(title);
             this.todo.setDescription(description);
             if (this.view.getFinishedBox().isSelected()) {
-                this.todo.setFinished();
+                this.todo.setFinishedDate(LocalDate.now());
             }
             DBUtil.updateTodo(this.todo);
         }

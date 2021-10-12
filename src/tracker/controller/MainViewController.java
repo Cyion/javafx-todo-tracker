@@ -1,9 +1,10 @@
 package tracker.controller;
 
+import javafx.collections.FXCollections;
 import javafx.scene.control.ListView;
 import tracker.model.Session;
 import tracker.model.ToDo;
-import tracker.util.DBUtil;
+import tracker.database.DBUtil;
 import tracker.util.StageBuilderUtil;
 import tracker.view.MainView;
 import tracker.view.ToDoView;
@@ -56,8 +57,8 @@ public class MainViewController {
     }
 
     private void displayToDo(ToDo todo) {
-        ToDoView view = new ToDoView(todo);
-        ToDoViewController controller = new ToDoViewController(view, todo);
+        final ToDoView view = new ToDoView(todo);
+        final ToDoViewController controller = new ToDoViewController(view, todo);
         view.getUpdateButton().setOnMouseClicked(e -> updateLists());
         view.getDeleteButton().setOnMouseClicked(e -> updateLists());
         this.view.setRight(view);
@@ -70,7 +71,7 @@ public class MainViewController {
     }
 
     public void updateLists() {
-        this.view.getToDoListView().setItems(DBUtil.getAllUnfinishedTodosByUser(Session.getInstance().getUser()));
-        this.view.getFinishedToDoListView().setItems(DBUtil.getAllFinishedTodosByUser(Session.getInstance().getUser()));
+        this.view.getToDoListView().setItems(FXCollections.observableArrayList(DBUtil.getAllUnfinishedTodosByUser(Session.getInstance().getUser())));
+        this.view.getFinishedToDoListView().setItems(FXCollections.observableArrayList(DBUtil.getAllFinishedTodosByUser(Session.getInstance().getUser())));
     }
 }

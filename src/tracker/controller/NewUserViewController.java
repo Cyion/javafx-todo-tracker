@@ -1,6 +1,6 @@
 package tracker.controller;
 
-import tracker.util.DBUtil;
+import tracker.database.DBUtil;
 import tracker.model.User;
 import tracker.util.StageBuilderUtil;
 import tracker.view.NewUserView;

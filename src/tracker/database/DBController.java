@@ -1,4 +1,4 @@
-package tracker.controller;
+package tracker.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -50,7 +50,7 @@ public class DBController {
 		}
 	}
 
-	public static DBController getInstance() {
+	protected static DBController getInstance() {
 		return instance;
 	}
 

@@ -1,10 +1,14 @@
 package tracker.model;
 
-import tracker.util.DBUtil;
+import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import tracker.database.DBUtil;
+
+import java.util.Objects;
 
 public class Session {
 	private final static Session instance = new Session();
-	private User user;
+	private final ReadOnlyObjectWrapper<User> user = new ReadOnlyObjectWrapper<>(this, "user", null);
 	
 	private Session() {
 		
@@ -15,17 +19,19 @@ public class Session {
 	}
 	
 	public boolean login(String email, String password) {
-		this.user = DBUtil.getUser(email, password);
-		return this.user != null;	
+		this.user.setValue(DBUtil.getUser(email, password));
+		return Objects.nonNull(this.user.getValue());
 	}
-	
-	public User getUser() {
-		return this.user;
-	}
-	
+
 	public void logout() {
-		this.user = null;
+		this.user.setValue(null);
 	}
 
+	public ReadOnlyObjectProperty<User> userProperty() {
+		return this.user.getReadOnlyProperty();
+	}
 
+	public User getUser() {
+		return this.user.getValue();
+	}
 }
